@@ -90,10 +90,11 @@ Este projeto implementa uma **arquitetura em camadas** profissional seguindo os 
 ✅ **Type Safety** - Enums e DTOs garantem tipos corretos  
 ✅ **SOLID Principles** - Single Responsibility, Dependency Inversion, etc
 
-### 📚 Documentação da Arquitetura
+### 📚 Documentação
 
-- **[ARCHITECTURE.md](ARCHITECTURE.md)** - Documentação completa da arquitetura
-- **[ARCHITECTURE_COMMANDS.md](ARCHITECTURE_COMMANDS.md)** - Comandos úteis e exemplos
+- **[QUICK_START.md](QUICK_START.md)** - Guia de início rápido
+- Documentação inline no código
+- Exemplos de uso nas pastas de cada camada
 
 ## 🛠️ Tecnologias Utilizadas
 
@@ -194,7 +195,7 @@ make make-module           # Criar módulo completo
 make make-event-listener-full  # Criar Event + Listener
 ```
 
-📚 **Ver mais:** [ARCHITECTURE_COMMANDS.md](ARCHITECTURE_COMMANDS.md)
+📚 **Ver mais:** [QUICK_START.md](QUICK_START.md)
 
 ## 👤 Credenciais de Acesso Padrão
 
