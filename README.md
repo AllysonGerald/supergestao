@@ -1,6 +1,8 @@
 # Super Gestão
 
-Sistema completo de gestão empresarial desenvolvido com Laravel 12 e Tailwind CSS.
+Sistema completo de gestão empresarial desenvolvido com Laravel 12 e Tailwind CSS, implementando **Clean Architecture** e **padrões avançados de desenvolvimento**.
+
+> 🏗️ **Arquitetura Profissional**: Este projeto implementa Services, Repositories, Actions, DTOs, Enums e Traits seguindo princípios SOLID e Clean Architecture.
 
 ## 🚀 Funcionalidades
 
@@ -56,6 +58,42 @@ Sistema completo de gestão empresarial desenvolvido com Laravel 12 e Tailwind C
 - Controle de perfis e permissões
 - Ativação/desativação de contas
 - Redefinição de senhas
+
+## 🏗️ Arquitetura Avançada
+
+Este projeto implementa uma **arquitetura em camadas** profissional seguindo os princípios de **Clean Architecture** e **SOLID**:
+
+### Camadas Implementadas
+
+- **🌐 Controllers (HTTP Layer)** - Recebe requests e retorna responses
+- **💼 Services (Business Logic)** - Orquestra lógica de negócio complexa
+- **🗄️ Repositories (Data Access)** - Abstrai acesso aos dados através de interfaces
+- **⚡ Actions (Single Responsibility)** - Ações específicas e reutilizáveis
+- **🏷️ Enums (Type-Safe Constants)** - Constantes tipadas (Status, Tipos, Roles)
+- **📦 DTOs (Data Transfer Objects)** - Transferência de dados entre camadas
+- **🔧 Traits (Reusable Code)** - Código reutilizável (Filtros, Formatação)
+- **👁️ Observers (Event Listeners)** - Listeners de eventos de Model
+- **🛠️ Utils (Helpers)** - Utilitários genéricos
+
+### Enums Disponíveis
+
+- **`PedidoStatus`** - pendente, processando, enviado, entregue, cancelado
+- **`ClienteTipo`** - pessoa física, pessoa jurídica
+- **`UserRole`** - admin, manager, user (com permissões)
+
+### Benefícios da Arquitetura
+
+✅ **Testabilidade** - Fácil criar testes unitários com mocks  
+✅ **Manutenibilidade** - Código organizado e fácil de manter  
+✅ **Escalabilidade** - Simples adicionar novas funcionalidades  
+✅ **Reutilização** - Actions e Traits compartilháveis  
+✅ **Type Safety** - Enums e DTOs garantem tipos corretos  
+✅ **SOLID Principles** - Single Responsibility, Dependency Inversion, etc
+
+### 📚 Documentação da Arquitetura
+
+- **[ARCHITECTURE.md](ARCHITECTURE.md)** - Documentação completa da arquitetura
+- **[ARCHITECTURE_COMMANDS.md](ARCHITECTURE_COMMANDS.md)** - Comandos úteis e exemplos
 
 ## 🛠️ Tecnologias Utilizadas
 
@@ -126,6 +164,38 @@ php artisan serve
 
 O sistema estará disponível em: `http://localhost:8000`
 
+## 🛠️ Comandos Make (Arquitetura)
+
+O projeto inclui comandos Make para facilitar a criação de componentes:
+
+### Estrutura de Pastas
+```bash
+make setup-architecture    # Cria toda a estrutura de pastas
+```
+
+### Criar Componentes
+```bash
+make make-repository       # Cria Repository + Interface
+make make-service          # Cria Service class
+make make-action           # Cria Action class
+make make-dto              # Cria Data Transfer Object
+make make-observable-model # Cria Model com Observer
+```
+
+### API Completa
+```bash
+make make-api-resource-full  # Cria Model, Controller, Resource, Request, Migration
+```
+
+### Outros Comandos
+```bash
+make help                  # Ver todos os comandos disponíveis
+make make-module           # Criar módulo completo
+make make-event-listener-full  # Criar Event + Listener
+```
+
+📚 **Ver mais:** [ARCHITECTURE_COMMANDS.md](ARCHITECTURE_COMMANDS.md)
+
 ## 👤 Credenciais de Acesso Padrão
 
 Após executar o seeder, você terá os seguintes usuários:
@@ -150,14 +220,27 @@ Após executar o seeder, você terá os seguintes usuários:
 ```
 backend/
 ├── app/
+│   ├── Actions/                # ⚡ Ações de uso único (ProcessarPedido, CancelarPedido)
+│   ├── DTOs/                   # 📦 Data Transfer Objects (ClienteDTO)
+│   ├── Enums/                  # 🏷️  Enums tipados (PedidoStatus, ClienteTipo, UserRole)
 │   ├── Http/
 │   │   ├── Controllers/
 │   │   │   ├── Admin/          # Controllers administrativos
 │   │   │   ├── Auth/           # Controllers de autenticação
 │   │   │   └── Site/           # Controllers do site público
-│   │   └── Middleware/
-│   │       └── CheckAdmin.php  # Middleware de verificação admin
-│   └── Models/                 # Models do sistema
+│   │   ├── Middleware/
+│   │   │   └── CheckAdmin.php  # Middleware de verificação admin
+│   │   └── Requests/           # Form Requests de validação
+│   ├── Models/                 # 🗃️  Models Eloquent
+│   ├── Observers/              # 👁️  Event Listeners de Models
+│   ├── Providers/              # Service Providers (RepositoryServiceProvider)
+│   ├── Repositories/           # 🗄️  Camada de acesso a dados
+│   │   ├── Contracts/          # Interfaces dos Repositories
+│   │   ├── ClienteRepository.php
+│   │   └── ProdutoRepository.php
+│   ├── Services/               # 💼 Lógica de negócio (ClienteService)
+│   ├── Traits/                 # 🔧 Código reutilizável (HasFilters, FormatsDocuments)
+│   └── Utils/                  # 🛠️  Utilitários e Helpers
 ├── database/
 │   ├── migrations/             # Migrations do banco
 │   └── seeders/                # Seeders com dados iniciais
@@ -223,16 +306,34 @@ O sistema possui uma interface moderna e responsiva construída com:
 
 ## 🚀 Próximos Passos (Melhorias Futuras)
 
+### ✅ Implementado
+- [x] **Arquitetura em Camadas** (Services, Repositories, Actions)
+- [x] **Enums Tipados** (PedidoStatus, ClienteTipo, UserRole)
+- [x] **Repository Pattern** com Interfaces
+- [x] **Service Layer** para lógica de negócio
+- [x] **Actions** para operações específicas
+- [x] **DTOs** para transferência de dados
+- [x] **Traits** reutilizáveis
+- [x] **Dependency Injection** configurada
+
+### 📋 Próximas Melhorias
+- [ ] Refatorar todos os Controllers para usar Services
+- [ ] Criar Repositories para Fornecedor e Pedido
+- [ ] Implementar Observers para logs automáticos
+- [ ] Adicionar testes unitários (PHPUnit)
+- [ ] Adicionar testes de integração
 - [ ] Relatórios em PDF
 - [ ] Exportação para Excel
 - [ ] Gráficos interativos com Chart.js
 - [ ] Notificações por e-mail
-- [ ] API REST
+- [ ] API REST completa
 - [ ] Integração com gateway de pagamento
-- [ ] Multi-idioma
+- [ ] Multi-idioma (i18n)
 - [ ] Tema escuro
 - [ ] Backup automático
-- [ ] Logs de auditoria
+- [ ] Logs de auditoria detalhados
+- [ ] Queue para processamento assíncrono
+- [ ] Cache para performance
 
 ## 📝 Licença
 
