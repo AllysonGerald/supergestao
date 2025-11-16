@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
@@ -7,13 +9,12 @@ use App\Models\Cliente;
 use App\Models\Fornecedor;
 use App\Models\Pedido;
 use App\Models\Produto;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 class DashboardController extends Controller
 {
     /**
-     * Exibe o dashboard administrativo
+     * Exibe o dashboard administrativo.
      */
     public function index()
     {
@@ -46,7 +47,7 @@ class DashboardController extends Controller
             ->get();
 
         // Produtos mais vendidos
-        $produtosMaisVendidos = Produto::withCount(['pedidoItens as total_vendido' => function ($query) {
+        $produtosMaisVendidos = Produto::withCount(['pedidoItens as total_vendido' => function ($query): void {
             $query->select(DB::raw('sum(quantidade)'));
         }])
             ->orderBy('total_vendido', 'desc')
@@ -66,4 +67,3 @@ class DashboardController extends Controller
         ));
     }
 }
-

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
@@ -11,7 +13,7 @@ use Illuminate\Support\Facades\Hash;
 class RegisterController extends Controller
 {
     /**
-     * Exibe o formulário de registro
+     * Exibe o formulário de registro.
      */
     public function showRegistrationForm()
     {
@@ -23,7 +25,7 @@ class RegisterController extends Controller
     }
 
     /**
-     * Processa o registro
+     * Processa o registro.
      */
     public function register(Request $request)
     {
@@ -54,4 +56,3 @@ class RegisterController extends Controller
         return redirect()->route('admin.dashboard')->with('success', 'Conta criada com sucesso!');
     }
 }
-

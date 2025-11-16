@@ -1,9 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Fornecedor;
+use Exception;
 use Illuminate\Http\Request;
 
 class FornecedorController extends Controller
@@ -18,7 +21,7 @@ class FornecedorController extends Controller
         // Busca
         if ($request->filled('busca')) {
             $busca = $request->busca;
-            $query->where(function($q) use ($busca) {
+            $query->where(function ($q) use ($busca): void {
                 $q->where('nome', 'like', "%{$busca}%")
                   ->orWhere('razao_social', 'like', "%{$busca}%")
                   ->orWhere('email', 'like', "%{$busca}%")
@@ -80,6 +83,7 @@ class FornecedorController extends Controller
     public function show(Fornecedor $fornecedor)
     {
         $fornecedor->load('produtos');
+
         return view('admin.fornecedores.show', compact('fornecedor'));
     }
 
@@ -98,9 +102,9 @@ class FornecedorController extends Controller
     {
         $validated = $request->validate([
             'nome' => 'required|string|max:255',
-            'cnpj' => 'required|string|max:18|unique:fornecedores,cnpj,' . $fornecedor->id,
+            'cnpj' => 'required|string|max:18|unique:fornecedores,cnpj,'.$fornecedor->id,
             'razao_social' => 'required|string|max:255',
-            'email' => 'required|email|unique:fornecedores,email,' . $fornecedor->id,
+            'email' => 'required|email|unique:fornecedores,email,'.$fornecedor->id,
             'telefone' => 'required|string|max:20',
             'celular' => 'nullable|string|max:20',
             'cep' => 'required|string|max:9',
@@ -128,12 +132,12 @@ class FornecedorController extends Controller
     {
         try {
             $fornecedor->delete();
+
             return redirect()->route('admin.fornecedores.index')
                 ->with('success', 'Fornecedor excluído com sucesso!');
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             return redirect()->route('admin.fornecedores.index')
                 ->with('error', 'Erro ao excluir fornecedor. Verifique se não há produtos vinculados.');
         }
     }
 }
-

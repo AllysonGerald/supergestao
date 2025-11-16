@@ -1,19 +1,20 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Actions;
 
 use App\Models\Pedido;
+use Exception;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 
 class CancelarPedidoAction
 {
     /**
-     * Cancela um pedido e retorna os produtos ao estoque
+     * Cancela um pedido e retorna os produtos ao estoque.
      *
-     * @param Pedido $pedido
-     * @return bool
-     * @throws \Exception
+     * @throws Exception
      */
     public function execute(Pedido $pedido): bool
     {
@@ -39,9 +40,9 @@ class CancelarPedidoAction
             ]);
 
             return true;
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             DB::rollBack();
-            
+
             Log::error('Erro ao cancelar pedido', [
                 'pedido_id' => $pedido->id,
                 'error' => $e->getMessage(),
@@ -51,4 +52,3 @@ class CancelarPedidoAction
         }
     }
 }
-

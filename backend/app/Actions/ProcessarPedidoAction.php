@@ -1,21 +1,22 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Actions;
 
 use App\Models\Pedido;
 use App\Models\PedidoItem;
 use App\Models\Produto;
+use Exception;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 
 class ProcessarPedidoAction
 {
     /**
-     * Processa um novo pedido
+     * Processa um novo pedido.
      *
-     * @param array $data
-     * @return Pedido
-     * @throws \Exception
+     * @throws Exception
      */
     public function execute(array $data): Pedido
     {
@@ -66,9 +67,9 @@ class ProcessarPedidoAction
             ]);
 
             return $pedido;
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             DB::rollBack();
-            
+
             Log::error('Erro ao processar pedido', [
                 'error' => $e->getMessage(),
                 'data' => $data,
@@ -78,4 +79,3 @@ class ProcessarPedidoAction
         }
     }
 }
-

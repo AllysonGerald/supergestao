@@ -1,10 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Fornecedor;
 use App\Models\Produto;
+use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
@@ -20,7 +23,7 @@ class ProdutoController extends Controller
         // Busca
         if ($request->filled('busca')) {
             $busca = $request->busca;
-            $query->where(function($q) use ($busca) {
+            $query->where(function ($q) use ($busca): void {
                 $q->where('nome', 'like', "%{$busca}%")
                   ->orWhere('codigo_sku', 'like', "%{$busca}%")
                   ->orWhere('categoria', 'like', "%{$busca}%");
@@ -38,7 +41,7 @@ class ProdutoController extends Controller
         }
 
         // Filtro por estoque baixo
-        if ($request->filled('estoque_baixo') && $request->estoque_baixo == '1') {
+        if ($request->filled('estoque_baixo') && '1' == $request->estoque_baixo) {
             $query->whereColumn('estoque_atual', '<=', 'estoque_minimo');
         }
 
@@ -54,6 +57,7 @@ class ProdutoController extends Controller
     public function create()
     {
         $fornecedores = Fornecedor::where('ativo', true)->orderBy('nome')->get();
+
         return view('admin.produtos.create', compact('fornecedores'));
     }
 
@@ -94,6 +98,7 @@ class ProdutoController extends Controller
     public function show(Produto $produto)
     {
         $produto->load('fornecedor', 'pedidoItens.pedido');
+
         return view('admin.produtos.show', compact('produto'));
     }
 
@@ -103,6 +108,7 @@ class ProdutoController extends Controller
     public function edit(Produto $produto)
     {
         $fornecedores = Fornecedor::where('ativo', true)->orderBy('nome')->get();
+
         return view('admin.produtos.edit', compact('produto', 'fornecedores'));
     }
 
@@ -113,7 +119,7 @@ class ProdutoController extends Controller
     {
         $validated = $request->validate([
             'nome' => 'required|string|max:255',
-            'codigo_sku' => 'required|string|max:255|unique:produtos,codigo_sku,' . $produto->id,
+            'codigo_sku' => 'required|string|max:255|unique:produtos,codigo_sku,'.$produto->id,
             'descricao' => 'nullable|string',
             'fornecedor_id' => 'nullable|exists:fornecedores,id',
             'preco_custo' => 'required|numeric|min:0',
@@ -151,14 +157,14 @@ class ProdutoController extends Controller
             if ($produto->imagem) {
                 Storage::disk('public')->delete($produto->imagem);
             }
-            
+
             $produto->delete();
+
             return redirect()->route('admin.produtos.index')
                 ->with('success', 'Produto excluído com sucesso!');
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             return redirect()->route('admin.produtos.index')
                 ->with('error', 'Erro ao excluir produto. Verifique se não há pedidos vinculados.');
         }
     }
 }
-

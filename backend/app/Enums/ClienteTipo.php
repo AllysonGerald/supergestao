@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Enums;
 
 enum ClienteTipo: string
@@ -9,7 +11,7 @@ enum ClienteTipo: string
 
     public function label(): string
     {
-        return match($this) {
+        return match ($this) {
             self::FISICA => 'Pessoa Física',
             self::JURIDICA => 'Pessoa Jurídica',
         };
@@ -17,7 +19,7 @@ enum ClienteTipo: string
 
     public function abbreviation(): string
     {
-        return match($this) {
+        return match ($this) {
             self::FISICA => 'PF',
             self::JURIDICA => 'PJ',
         };
@@ -28,4 +30,3 @@ enum ClienteTipo: string
         return array_column(self::cases(), 'value');
     }
 }
-

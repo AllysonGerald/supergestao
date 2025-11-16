@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Repositories;
 
 use App\Models\Cliente;
@@ -11,7 +13,8 @@ class ClienteRepository implements ClienteRepositoryInterface
 {
     public function __construct(
         protected Cliente $model
-    ) {}
+    ) {
+    }
 
     public function all(): Collection
     {
@@ -24,7 +27,7 @@ class ClienteRepository implements ClienteRepositoryInterface
 
         if (isset($filters['busca'])) {
             $busca = $filters['busca'];
-            $query->where(function($q) use ($busca) {
+            $query->where(function ($q) use ($busca): void {
                 $q->where('nome', 'like', "%{$busca}%")
                   ->orWhere('email', 'like', "%{$busca}%")
                   ->orWhere('cpf_cnpj', 'like', "%{$busca}%");
@@ -55,7 +58,7 @@ class ClienteRepository implements ClienteRepositoryInterface
     public function update(int $id, array $data): bool
     {
         $cliente = $this->find($id);
-        
+
         if (!$cliente) {
             return false;
         }
@@ -66,7 +69,7 @@ class ClienteRepository implements ClienteRepositoryInterface
     public function delete(int $id): bool
     {
         $cliente = $this->find($id);
-        
+
         if (!$cliente) {
             return false;
         }
@@ -97,4 +100,3 @@ class ClienteRepository implements ClienteRepositoryInterface
             ->get();
     }
 }
-

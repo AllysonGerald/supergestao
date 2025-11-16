@@ -1,9 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Services;
 
 use App\Models\Cliente;
 use App\Repositories\Contracts\ClienteRepositoryInterface;
+use Exception;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\DB;
@@ -13,10 +16,11 @@ class ClienteService
 {
     public function __construct(
         protected ClienteRepositoryInterface $clienteRepository
-    ) {}
+    ) {
+    }
 
     /**
-     * Lista clientes com paginação e filtros
+     * Lista clientes com paginação e filtros.
      */
     public function listarClientes(int $perPage = 10, array $filters = []): LengthAwarePaginator
     {
@@ -24,7 +28,7 @@ class ClienteService
     }
 
     /**
-     * Busca cliente por ID
+     * Busca cliente por ID.
      */
     public function buscarCliente(int $id): ?Cliente
     {
@@ -32,12 +36,12 @@ class ClienteService
     }
 
     /**
-     * Cria um novo cliente
+     * Cria um novo cliente.
      */
     public function criarCliente(array $data): Cliente
     {
         DB::beginTransaction();
-        
+
         try {
             // Formata CPF/CNPJ removendo caracteres especiais
             if (isset($data['cpf_cnpj'])) {
@@ -52,11 +56,11 @@ class ClienteService
             $cliente = $this->clienteRepository->create($data);
 
             DB::commit();
-            
+
             Log::info('Cliente criado', ['cliente_id' => $cliente->id]);
-            
+
             return $cliente;
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             DB::rollBack();
             Log::error('Erro ao criar cliente', ['error' => $e->getMessage()]);
             throw $e;
@@ -64,12 +68,12 @@ class ClienteService
     }
 
     /**
-     * Atualiza cliente existente
+     * Atualiza cliente existente.
      */
     public function atualizarCliente(int $id, array $data): bool
     {
         DB::beginTransaction();
-        
+
         try {
             // Formata CPF/CNPJ removendo caracteres especiais
             if (isset($data['cpf_cnpj'])) {
@@ -84,11 +88,11 @@ class ClienteService
             $updated = $this->clienteRepository->update($id, $data);
 
             DB::commit();
-            
+
             Log::info('Cliente atualizado', ['cliente_id' => $id]);
-            
+
             return $updated;
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             DB::rollBack();
             Log::error('Erro ao atualizar cliente', ['cliente_id' => $id, 'error' => $e->getMessage()]);
             throw $e;
@@ -96,21 +100,21 @@ class ClienteService
     }
 
     /**
-     * Deleta um cliente
+     * Deleta um cliente.
      */
     public function deletarCliente(int $id): bool
     {
         DB::beginTransaction();
-        
+
         try {
             $deleted = $this->clienteRepository->delete($id);
 
             DB::commit();
-            
+
             Log::info('Cliente deletado', ['cliente_id' => $id]);
-            
+
             return $deleted;
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             DB::rollBack();
             Log::error('Erro ao deletar cliente', ['cliente_id' => $id, 'error' => $e->getMessage()]);
             throw $e;
@@ -118,7 +122,7 @@ class ClienteService
     }
 
     /**
-     * Busca clientes ativos
+     * Busca clientes ativos.
      */
     public function buscarClientesAtivos(): Collection
     {
@@ -126,12 +130,12 @@ class ClienteService
     }
 
     /**
-     * Verifica se email já existe
+     * Verifica se email já existe.
      */
     public function emailExiste(string $email, ?int $ignorarId = null): bool
     {
         $cliente = $this->clienteRepository->findByEmail($email);
-        
+
         if (!$cliente) {
             return false;
         }
@@ -144,12 +148,12 @@ class ClienteService
     }
 
     /**
-     * Verifica se CPF/CNPJ já existe
+     * Verifica se CPF/CNPJ já existe.
      */
     public function cpfCnpjExiste(string $cpfCnpj, ?int $ignorarId = null): bool
     {
         $cliente = $this->clienteRepository->findByCpfCnpj($cpfCnpj);
-        
+
         if (!$cliente) {
             return false;
         }
@@ -161,4 +165,3 @@ class ClienteService
         return true;
     }
 }
-

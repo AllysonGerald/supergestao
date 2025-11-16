@@ -1,15 +1,17 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Traits;
 
 trait HasFilters
 {
     /**
-     * Aplica filtros de busca genéricos
+     * Aplica filtros de busca genéricos.
      */
     public function scopeSearch($query, string $term, array $fields = ['nome'])
     {
-        return $query->where(function($q) use ($term, $fields) {
+        return $query->where(function ($q) use ($term, $fields): void {
             foreach ($fields as $field) {
                 $q->orWhere($field, 'like', "%{$term}%");
             }
@@ -17,7 +19,7 @@ trait HasFilters
     }
 
     /**
-     * Filtro por status ativo/inativo
+     * Filtro por status ativo/inativo.
      */
     public function scopeActive($query, bool $active = true)
     {
@@ -25,7 +27,7 @@ trait HasFilters
     }
 
     /**
-     * Filtro por data
+     * Filtro por data.
      */
     public function scopeDateRange($query, string $field, ?string $start = null, ?string $end = null)
     {
@@ -40,4 +42,3 @@ trait HasFilters
         return $query;
     }
 }
-

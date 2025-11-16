@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -32,7 +34,7 @@ class Cliente extends Model
     ];
 
     /**
-     * Relacionamento com pedidos
+     * Relacionamento com pedidos.
      */
     public function pedidos()
     {
@@ -40,19 +42,18 @@ class Cliente extends Model
     }
 
     /**
-     * Formata o CPF/CNPJ
+     * Formata o CPF/CNPJ.
      */
     public function getCpfCnpjFormatadoAttribute(): string
     {
         $documento = preg_replace('/\D/', '', $this->cpf_cnpj);
-        
-        if (strlen($documento) === 11) {
+
+        if (11 === strlen($documento)) {
             return preg_replace('/(\d{3})(\d{3})(\d{3})(\d{2})/', '$1.$2.$3-$4', $documento);
-        } elseif (strlen($documento) === 14) {
+        } elseif (14 === strlen($documento)) {
             return preg_replace('/(\d{2})(\d{3})(\d{3})(\d{4})(\d{2})/', '$1.$2.$3/$4-$5', $documento);
         }
-        
+
         return $this->cpf_cnpj;
     }
 }
-

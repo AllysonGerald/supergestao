@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Enums;
 
 enum UserRole: string
@@ -10,7 +12,7 @@ enum UserRole: string
 
     public function label(): string
     {
-        return match($this) {
+        return match ($this) {
             self::ADMIN => 'Administrador',
             self::MANAGER => 'Gerente',
             self::USER => 'Usuário',
@@ -19,7 +21,7 @@ enum UserRole: string
 
     public function permissions(): array
     {
-        return match($this) {
+        return match ($this) {
             self::ADMIN => ['*'], // Todas as permissões
             self::MANAGER => ['view', 'create', 'edit', 'delete'],
             self::USER => ['view', 'create'],
@@ -33,12 +35,11 @@ enum UserRole: string
 
     public function isAdmin(): bool
     {
-        return $this === self::ADMIN;
+        return self::ADMIN === $this;
     }
 
     public function isManager(): bool
     {
-        return $this === self::MANAGER;
+        return self::MANAGER === $this;
     }
 }
-

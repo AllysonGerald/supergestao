@@ -1,9 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Cliente;
+use Exception;
 use Illuminate\Http\Request;
 
 class ClienteController extends Controller
@@ -18,7 +21,7 @@ class ClienteController extends Controller
         // Busca
         if ($request->filled('busca')) {
             $busca = $request->busca;
-            $query->where(function($q) use ($busca) {
+            $query->where(function ($q) use ($busca): void {
                 $q->where('nome', 'like', "%{$busca}%")
                   ->orWhere('email', 'like', "%{$busca}%")
                   ->orWhere('cpf_cnpj', 'like', "%{$busca}%");
@@ -83,6 +86,7 @@ class ClienteController extends Controller
     public function show(Cliente $cliente)
     {
         $cliente->load('pedidos');
+
         return view('admin.clientes.show', compact('cliente'));
     }
 
@@ -101,9 +105,9 @@ class ClienteController extends Controller
     {
         $validated = $request->validate([
             'nome' => 'required|string|max:255',
-            'cpf_cnpj' => 'required|string|max:18|unique:clientes,cpf_cnpj,' . $cliente->id,
+            'cpf_cnpj' => 'required|string|max:18|unique:clientes,cpf_cnpj,'.$cliente->id,
             'tipo' => 'required|in:fisica,juridica',
-            'email' => 'required|email|unique:clientes,email,' . $cliente->id,
+            'email' => 'required|email|unique:clientes,email,'.$cliente->id,
             'telefone' => 'required|string|max:20',
             'celular' => 'nullable|string|max:20',
             'cep' => 'required|string|max:9',
@@ -130,12 +134,12 @@ class ClienteController extends Controller
     {
         try {
             $cliente->delete();
+
             return redirect()->route('admin.clientes.index')
                 ->with('success', 'Cliente excluído com sucesso!');
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             return redirect()->route('admin.clientes.index')
                 ->with('error', 'Erro ao excluir cliente. Verifique se não há pedidos vinculados.');
         }
     }
 }
-

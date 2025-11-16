@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Repositories;
 
 use App\Models\Produto;
@@ -9,7 +11,9 @@ use Illuminate\Database\Eloquent\Collection;
 
 class ProdutoRepository implements ProdutoRepositoryInterface
 {
-    public function __construct(protected Produto $model) {}
+    public function __construct(protected Produto $model)
+    {
+    }
 
     public function paginate(int $perPage = 10, array $filters = []): LengthAwarePaginator
     {
@@ -17,7 +21,7 @@ class ProdutoRepository implements ProdutoRepositoryInterface
 
         if (isset($filters['busca'])) {
             $busca = $filters['busca'];
-            $query->where(function($q) use ($busca) {
+            $query->where(function ($q) use ($busca): void {
                 $q->where('nome', 'like', "%{$busca}%")
                   ->orWhere('codigo_sku', 'like', "%{$busca}%")
                   ->orWhere('categoria', 'like', "%{$busca}%");
@@ -32,7 +36,7 @@ class ProdutoRepository implements ProdutoRepositoryInterface
             $query->where('ativo', $filters['ativo']);
         }
 
-        if (isset($filters['estoque_baixo']) && $filters['estoque_baixo'] == '1') {
+        if (isset($filters['estoque_baixo']) && '1' == $filters['estoque_baixo']) {
             $query->whereColumn('estoque_atual', '<=', 'estoque_minimo');
         }
 
@@ -69,13 +73,13 @@ class ProdutoRepository implements ProdutoRepositoryInterface
     public function atualizarEstoque(int $id, int $quantidade): bool
     {
         $produto = $this->find($id);
-        
+
         if (!$produto) {
             return false;
         }
 
         $produto->estoque_atual += $quantidade;
+
         return $produto->save();
     }
 }
-

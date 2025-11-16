@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -31,7 +33,7 @@ class Pedido extends Model
     ];
 
     /**
-     * Relacionamento com cliente
+     * Relacionamento com cliente.
      */
     public function cliente()
     {
@@ -39,7 +41,7 @@ class Pedido extends Model
     }
 
     /**
-     * Relacionamento com usuário
+     * Relacionamento com usuário.
      */
     public function user()
     {
@@ -47,7 +49,7 @@ class Pedido extends Model
     }
 
     /**
-     * Relacionamento com itens do pedido
+     * Relacionamento com itens do pedido.
      */
     public function itens()
     {
@@ -55,18 +57,18 @@ class Pedido extends Model
     }
 
     /**
-     * Gera o número do pedido automaticamente
+     * Gera o número do pedido automaticamente.
      */
     public static function gerarNumeroPedido(): string
     {
         $ultimoPedido = self::orderBy('id', 'desc')->first();
         $numero = $ultimoPedido ? $ultimoPedido->id + 1 : 1;
-        
-        return 'PED' . date('Y') . str_pad($numero, 6, '0', STR_PAD_LEFT);
+
+        return 'PED'.date('Y').str_pad($numero, 6, '0', STR_PAD_LEFT);
     }
 
     /**
-     * Calcula o valor final do pedido
+     * Calcula o valor final do pedido.
      */
     public function calcularValorFinal(): void
     {
@@ -74,4 +76,3 @@ class Pedido extends Model
         $this->save();
     }
 }
-

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\DTOs;
 
 class ClienteDTO
@@ -20,10 +22,11 @@ class ClienteDTO
         public readonly string $estado,
         public readonly ?string $observacoes,
         public readonly bool $ativo = true,
-    ) {}
+    ) {
+    }
 
     /**
-     * Cria DTO a partir de array
+     * Cria DTO a partir de array.
      */
     public static function fromArray(array $data): self
     {
@@ -47,7 +50,7 @@ class ClienteDTO
     }
 
     /**
-     * Converte DTO para array
+     * Converte DTO para array.
      */
     public function toArray(): array
     {
@@ -70,4 +73,3 @@ class ClienteDTO
         ];
     }
 }
-

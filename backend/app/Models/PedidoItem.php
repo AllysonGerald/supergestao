@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -26,7 +28,7 @@ class PedidoItem extends Model
     ];
 
     /**
-     * Relacionamento com pedido
+     * Relacionamento com pedido.
      */
     public function pedido()
     {
@@ -34,7 +36,7 @@ class PedidoItem extends Model
     }
 
     /**
-     * Relacionamento com produto
+     * Relacionamento com produto.
      */
     public function produto()
     {
@@ -42,7 +44,7 @@ class PedidoItem extends Model
     }
 
     /**
-     * Calcula o subtotal do item
+     * Calcula o subtotal do item.
      */
     public function calcularSubtotal(): void
     {
@@ -50,4 +52,3 @@ class PedidoItem extends Model
         $this->save();
     }
 }
-

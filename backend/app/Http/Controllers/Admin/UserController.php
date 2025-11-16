@@ -1,9 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
+use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 
@@ -19,7 +22,7 @@ class UserController extends Controller
         // Busca
         if ($request->filled('busca')) {
             $busca = $request->busca;
-            $query->where(function($q) use ($busca) {
+            $query->where(function ($q) use ($busca): void {
                 $q->where('name', 'like', "%{$busca}%")
                   ->orWhere('email', 'like', "%{$busca}%");
             });
@@ -75,6 +78,7 @@ class UserController extends Controller
     public function show(User $user)
     {
         $user->load('pedidos');
+
         return view('admin.users.show', compact('user'));
     }
 
@@ -93,7 +97,7 @@ class UserController extends Controller
     {
         $validated = $request->validate([
             'name' => 'required|string|max:255',
-            'email' => 'required|email|unique:users,email,' . $user->id,
+            'email' => 'required|email|unique:users,email,'.$user->id,
             'password' => 'nullable|string|min:8|confirmed',
             'role' => 'required|in:admin,manager,user',
             'active' => 'boolean',
@@ -124,12 +128,12 @@ class UserController extends Controller
 
         try {
             $user->delete();
+
             return redirect()->route('admin.users.index')
                 ->with('success', 'Usuário excluído com sucesso!');
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             return redirect()->route('admin.users.index')
                 ->with('error', 'Erro ao excluir usuário.');
         }
     }
 }
-

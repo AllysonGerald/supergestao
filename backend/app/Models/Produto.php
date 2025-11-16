@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -33,7 +35,7 @@ class Produto extends Model
     ];
 
     /**
-     * Relacionamento com fornecedor
+     * Relacionamento com fornecedor.
      */
     public function fornecedor()
     {
@@ -41,7 +43,7 @@ class Produto extends Model
     }
 
     /**
-     * Relacionamento com itens de pedido
+     * Relacionamento com itens de pedido.
      */
     public function pedidoItens()
     {
@@ -49,7 +51,7 @@ class Produto extends Model
     }
 
     /**
-     * Verifica se o estoque está baixo
+     * Verifica se o estoque está baixo.
      */
     public function isEstoqueBaixo(): bool
     {
@@ -57,15 +59,14 @@ class Produto extends Model
     }
 
     /**
-     * Calcula a margem de lucro
+     * Calcula a margem de lucro.
      */
     public function getMargemLucroAttribute(): float
     {
-        if ($this->preco_custo == 0) {
+        if (0 == $this->preco_custo) {
             return 0;
         }
-        
+
         return (($this->preco_venda - $this->preco_custo) / $this->preco_custo) * 100;
     }
 }
-

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -35,7 +37,7 @@ class Fornecedor extends Model
     ];
 
     /**
-     * Relacionamento com produtos
+     * Relacionamento com produtos.
      */
     public function produtos()
     {
@@ -43,17 +45,16 @@ class Fornecedor extends Model
     }
 
     /**
-     * Formata o CNPJ
+     * Formata o CNPJ.
      */
     public function getCnpjFormatadoAttribute(): string
     {
         $cnpj = preg_replace('/\D/', '', $this->cnpj);
-        
-        if (strlen($cnpj) === 14) {
+
+        if (14 === strlen($cnpj)) {
             return preg_replace('/(\d{2})(\d{3})(\d{3})(\d{4})(\d{2})/', '$1.$2.$3/$4-$5', $cnpj);
         }
-        
+
         return $this->cnpj;
     }
 }
-

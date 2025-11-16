@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
@@ -10,7 +12,7 @@ use Illuminate\Validation\ValidationException;
 class LoginController extends Controller
 {
     /**
-     * Exibe o formulário de login
+     * Exibe o formulário de login.
      */
     public function showLoginForm()
     {
@@ -22,7 +24,7 @@ class LoginController extends Controller
     }
 
     /**
-     * Processa o login
+     * Processa o login.
      */
     public function login(Request $request)
     {
@@ -44,21 +46,17 @@ class LoginController extends Controller
             // Verifica se o usuário está ativo
             if (!Auth::user()->active) {
                 Auth::logout();
-                throw ValidationException::withMessages([
-                    'email' => 'Sua conta está inativa. Entre em contato com o administrador.',
-                ]);
+                throw ValidationException::withMessages(['email' => 'Sua conta está inativa. Entre em contato com o administrador.']);
             }
 
             return redirect()->intended(route('admin.dashboard'));
         }
 
-        throw ValidationException::withMessages([
-            'email' => 'As credenciais fornecidas não correspondem aos nossos registros.',
-        ]);
+        throw ValidationException::withMessages(['email' => 'As credenciais fornecidas não correspondem aos nossos registros.']);
     }
 
     /**
-     * Efetua o logout
+     * Efetua o logout.
      */
     public function logout(Request $request)
     {
@@ -70,4 +68,3 @@ class LoginController extends Controller
         return redirect()->route('login');
     }
 }
-

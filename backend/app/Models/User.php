@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
@@ -10,7 +12,8 @@ use Illuminate\Notifications\Notifiable;
 class User extends Authenticatable
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
-    use HasFactory, Notifiable;
+    use HasFactory;
+    use Notifiable;
 
     /**
      * The attributes that are mass assignable.
@@ -50,23 +53,23 @@ class User extends Authenticatable
     }
 
     /**
-     * Verifica se o usuário é admin
+     * Verifica se o usuário é admin.
      */
     public function isAdmin(): bool
     {
-        return $this->role === 'admin';
+        return 'admin' === $this->role;
     }
 
     /**
-     * Verifica se o usuário é gerente
+     * Verifica se o usuário é gerente.
      */
     public function isManager(): bool
     {
-        return $this->role === 'manager';
+        return 'manager' === $this->role;
     }
 
     /**
-     * Relacionamento com pedidos
+     * Relacionamento com pedidos.
      */
     public function pedidos()
     {

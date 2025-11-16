@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Enums;
 
 enum PedidoStatus: string
@@ -12,7 +14,7 @@ enum PedidoStatus: string
 
     public function label(): string
     {
-        return match($this) {
+        return match ($this) {
             self::PENDENTE => 'Pendente',
             self::PROCESSANDO => 'Processando',
             self::ENVIADO => 'Enviado',
@@ -23,7 +25,7 @@ enum PedidoStatus: string
 
     public function color(): string
     {
-        return match($this) {
+        return match ($this) {
             self::PENDENTE => 'yellow',
             self::PROCESSANDO => 'blue',
             self::ENVIADO => 'indigo',
@@ -37,4 +39,3 @@ enum PedidoStatus: string
         return array_column(self::cases(), 'value');
     }
 }
-

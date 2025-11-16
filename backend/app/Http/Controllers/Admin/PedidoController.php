@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
@@ -7,6 +9,7 @@ use App\Models\Cliente;
 use App\Models\Pedido;
 use App\Models\PedidoItem;
 use App\Models\Produto;
+use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -22,9 +25,9 @@ class PedidoController extends Controller
         // Busca
         if ($request->filled('busca')) {
             $busca = $request->busca;
-            $query->where(function($q) use ($busca) {
+            $query->where(function ($q) use ($busca): void {
                 $q->where('numero_pedido', 'like', "%{$busca}%")
-                  ->orWhereHas('cliente', function($q) use ($busca) {
+                  ->orWhereHas('cliente', function ($q) use ($busca): void {
                       $q->where('nome', 'like', "%{$busca}%");
                   });
             });
@@ -55,7 +58,7 @@ class PedidoController extends Controller
     {
         $clientes = Cliente::where('ativo', true)->orderBy('nome')->get();
         $produtos = Produto::where('ativo', true)->orderBy('nome')->get();
-        
+
         return view('admin.pedidos.create', compact('clientes', 'produtos'));
     }
 
@@ -119,10 +122,11 @@ class PedidoController extends Controller
 
             return redirect()->route('admin.pedidos.index')
                 ->with('success', 'Pedido criado com sucesso!');
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             DB::rollBack();
+
             return back()->withInput()
-                ->with('error', 'Erro ao criar pedido: ' . $e->getMessage());
+                ->with('error', 'Erro ao criar pedido: '.$e->getMessage());
         }
     }
 
@@ -132,6 +136,7 @@ class PedidoController extends Controller
     public function show(Pedido $pedido)
     {
         $pedido->load(['cliente', 'user', 'itens.produto']);
+
         return view('admin.pedidos.show', compact('pedido'));
     }
 
@@ -143,7 +148,7 @@ class PedidoController extends Controller
         $clientes = Cliente::where('ativo', true)->orderBy('nome')->get();
         $produtos = Produto::where('ativo', true)->orderBy('nome')->get();
         $pedido->load('itens.produto');
-        
+
         return view('admin.pedidos.edit', compact('pedido', 'clientes', 'produtos'));
     }
 
@@ -183,25 +188,26 @@ class PedidoController extends Controller
             }
 
             $pedido->delete();
-            
+
             DB::commit();
 
             return redirect()->route('admin.pedidos.index')
                 ->with('success', 'Pedido excluído com sucesso!');
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             DB::rollBack();
+
             return redirect()->route('admin.pedidos.index')
                 ->with('error', 'Erro ao excluir pedido.');
         }
     }
 
     /**
-     * Busca produto por ID (AJAX)
+     * Busca produto por ID (AJAX).
      */
     public function buscarProduto($id)
     {
         $produto = Produto::find($id);
-        
+
         if (!$produto) {
             return response()->json(['error' => 'Produto não encontrado'], 404);
         }
@@ -215,4 +221,3 @@ class PedidoController extends Controller
         ]);
     }
 }
-

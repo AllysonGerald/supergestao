@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 use App\Http\Controllers\Admin\ClienteController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\FornecedorController;
@@ -27,7 +29,7 @@ Route::get('/register', [RegisterController::class, 'showRegistrationForm'])->na
 Route::post('/register', [RegisterController::class, 'register'])->name('register.post');
 
 // Rotas Administrativas (Protegidas por autenticação)
-Route::middleware(['auth'])->prefix('admin')->name('admin.')->group(function () {
+Route::middleware(['auth'])->prefix('admin')->name('admin.')->group(function (): void {
     // Dashboard
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
@@ -45,7 +47,7 @@ Route::middleware(['auth'])->prefix('admin')->name('admin.')->group(function () 
     Route::get('pedidos/produto/{id}', [PedidoController::class, 'buscarProduto'])->name('pedidos.buscar-produto');
 
     // Usuários (Apenas para administradores)
-    Route::middleware(['check.admin'])->group(function () {
+    Route::middleware(['check.admin'])->group(function (): void {
         Route::resource('users', UserController::class);
     });
 });
