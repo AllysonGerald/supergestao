@@ -15,6 +15,9 @@
     <!-- Alpine.js -->
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
     
+    <!-- Vite Assets (Máscaras e outros scripts) -->
+    @vite(['resources/js/app.js'])
+    
     <style>
         [x-cloak] { display: none !important; }
     </style>

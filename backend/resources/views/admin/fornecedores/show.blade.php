@@ -14,12 +14,12 @@
         <dl class="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div><dt class="text-sm font-medium text-gray-500">Nome</dt><dd class="mt-1 text-sm text-gray-900">{{ $fornecedor->nome }}</dd></div>
             <div><dt class="text-sm font-medium text-gray-500">Razão Social</dt><dd class="mt-1 text-sm text-gray-900">{{ $fornecedor->razao_social }}</dd></div>
-            <div><dt class="text-sm font-medium text-gray-500">CNPJ</dt><dd class="mt-1 text-sm text-gray-900">{{ $fornecedor->cnpj }}</dd></div>
+            <div><dt class="text-sm font-medium text-gray-500">CNPJ</dt><dd class="mt-1 text-sm text-gray-900 font-medium" data-format="cnpj">{{ $fornecedor->cnpj }}</dd></div>
             <div><dt class="text-sm font-medium text-gray-500">Status</dt><dd class="mt-1"><span class="px-2 py-1 text-xs font-medium rounded-full {{ $fornecedor->ativo ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800' }}">{{ $fornecedor->ativo ? 'Ativo' : 'Inativo' }}</span></dd></div>
             <div><dt class="text-sm font-medium text-gray-500">E-mail</dt><dd class="mt-1 text-sm text-gray-900">{{ $fornecedor->email }}</dd></div>
-            <div><dt class="text-sm font-medium text-gray-500">Telefone</dt><dd class="mt-1 text-sm text-gray-900">{{ $fornecedor->telefone }}</dd></div>
+            <div><dt class="text-sm font-medium text-gray-500">Telefone</dt><dd class="mt-1 text-sm text-gray-900 font-medium" data-format="phone">{{ $fornecedor->telefone }}</dd></div>
             @if($fornecedor->celular)
-            <div><dt class="text-sm font-medium text-gray-500">Celular</dt><dd class="mt-1 text-sm text-gray-900">{{ $fornecedor->celular }}</dd></div>
+            <div><dt class="text-sm font-medium text-gray-500">Celular</dt><dd class="mt-1 text-sm text-gray-900 font-medium" data-format="phone">{{ $fornecedor->celular }}</dd></div>
             @endif
             @if($fornecedor->contato_nome)
             <div><dt class="text-sm font-medium text-gray-500">Contato</dt><dd class="mt-1 text-sm text-gray-900">{{ $fornecedor->contato_nome }}</dd></div>
@@ -28,7 +28,7 @@
     </div>
     <div class="bg-white rounded-xl shadow-lg p-6">
         <h2 class="text-xl font-bold text-gray-900 mb-6">Endereço</h2>
-        <p class="text-sm text-gray-900">{{ $fornecedor->endereco }}, {{ $fornecedor->numero }}@if($fornecedor->complemento), {{ $fornecedor->complemento }}@endif<br>{{ $fornecedor->bairro }} - {{ $fornecedor->cidade }}/{{ $fornecedor->estado }}<br>CEP: {{ $fornecedor->cep }}</p>
+        <p class="text-sm text-gray-900">{{ $fornecedor->endereco }}, {{ $fornecedor->numero }}@if($fornecedor->complemento), {{ $fornecedor->complemento }}@endif<br>{{ $fornecedor->bairro }} - {{ $fornecedor->cidade }}/{{ $fornecedor->estado }}<br><span class="font-medium">CEP: <span data-format="cep">{{ $fornecedor->cep }}</span></span></p>
     </div>
     @if($fornecedor->produtos->count() > 0)
     <div class="bg-white rounded-xl shadow-lg p-6">

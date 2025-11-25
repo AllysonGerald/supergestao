@@ -36,7 +36,7 @@
                     </div>
                     <div>
                         <dt class="text-sm font-medium text-gray-500">CPF/CNPJ</dt>
-                        <dd class="mt-1 text-sm text-gray-900">{{ $cliente->cpf_cnpj }}</dd>
+                        <dd class="mt-1 text-sm text-gray-900 font-medium" data-format="cpf-cnpj">{{ $cliente->cpf_cnpj }}</dd>
                     </div>
                     <div>
                         <dt class="text-sm font-medium text-gray-500">Status</dt>
@@ -56,12 +56,12 @@
                     </div>
                     <div>
                         <dt class="text-sm font-medium text-gray-500">Telefone</dt>
-                        <dd class="mt-1 text-sm text-gray-900">{{ $cliente->telefone }}</dd>
+                        <dd class="mt-1 text-sm text-gray-900 font-medium" data-format="phone">{{ $cliente->telefone }}</dd>
                     </div>
                     @if($cliente->celular)
                     <div>
                         <dt class="text-sm font-medium text-gray-500">Celular</dt>
-                        <dd class="mt-1 text-sm text-gray-900">{{ $cliente->celular }}</dd>
+                        <dd class="mt-1 text-sm text-gray-900 font-medium" data-format="phone">{{ $cliente->celular }}</dd>
                     </div>
                     @endif
                 </dl>
@@ -76,7 +76,7 @@
                             {{ $cliente->endereco }}, {{ $cliente->numero }}
                             @if($cliente->complemento), {{ $cliente->complemento }}@endif<br>
                             {{ $cliente->bairro }} - {{ $cliente->cidade }}/{{ $cliente->estado }}<br>
-                            CEP: {{ $cliente->cep }}
+                            <span class="font-medium">CEP: <span data-format="cep">{{ $cliente->cep }}</span></span>
                         </dd>
                     </div>
                 </dl>

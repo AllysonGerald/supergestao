@@ -14,11 +14,11 @@
             <div class="space-y-4"><template x-for="(item, index) in items" :key="index"><div class="grid md:grid-cols-5 gap-4 p-4 bg-gray-50 rounded-lg">
                 <div class="md:col-span-2"><select :name="'produtos['+index+'][produto_id]'" required class="w-full px-4 py-2 border rounded-lg">@foreach($produtos as $p)<option value="{{ $p->id }}" data-preco="{{ $p->preco_venda }}">{{ $p->nome }} (R$ {{ number_format($p->preco_venda, 2, ',', '.') }})</option>@endforeach</select></div>
                 <div><input type="number" :name="'produtos['+index+'][quantidade]'" placeholder="Qtd" min="1" required class="w-full px-4 py-2 border rounded-lg"></div>
-                <div><input type="number" step="0.01" :name="'produtos['+index+'][preco_unitario]'" placeholder="Preço" required class="w-full px-4 py-2 border rounded-lg"></div>
+                <div><input type="text" :name="'produtos['+index+'][preco_unitario]'" placeholder="R$ 0,00" data-mask="currency" required class="w-full px-4 py-2 border rounded-lg"></div>
                 <div><button type="button" @click="removeItem(index)" class="w-full bg-red-500 text-white px-4 py-2 rounded-lg"><i class="fas fa-trash"></i></button></div>
             </div></template></div>
             <button type="button" @click="addItem()" class="mt-4 bg-green-600 text-white px-4 py-2 rounded-lg"><i class="fas fa-plus mr-2"></i>Adicionar Item</button>
-            <div class="mt-6"><label class="block text-sm font-medium mb-2">Desconto</label><input type="number" step="0.01" name="desconto" value="0" class="w-full px-4 py-2 border rounded-lg"></div>
+            <div class="mt-6"><label class="block text-sm font-medium mb-2">Desconto</label><input type="text" name="desconto" value="0" data-mask="currency" placeholder="R$ 0,00" class="w-full px-4 py-2 border rounded-lg"></div>
         </div>
         <div class="flex justify-end space-x-4"><a href="{{ route('admin.pedidos.index') }}" class="bg-gray-200 px-6 py-3 rounded-lg">Cancelar</a><button type="submit" class="bg-indigo-600 text-white px-6 py-3 rounded-lg"><i class="fas fa-save mr-2"></i>Salvar Pedido</button></div>
     </form>

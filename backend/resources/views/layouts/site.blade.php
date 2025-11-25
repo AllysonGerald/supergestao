@@ -5,22 +5,25 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Super Gestão - Sistema completo de gestão empresarial">
     <title>@yield('title', 'Super Gestão - Sistema de Gestão Empresarial')</title>
-    
+
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
-    
+
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
+
     <!-- Alpine.js -->
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
-    
+
+    <!-- Vite Assets (Máscaras e outros scripts) -->
+    @vite(['resources/js/app.js'])
+
     <style>
         [x-cloak] { display: none !important; }
     </style>
 </head>
 <body class="bg-gray-50 antialiased">
-    
+
     <!-- Navbar -->
     <nav class="bg-white shadow-lg fixed w-full z-50" x-data="{ open: false }">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -37,29 +40,29 @@
 
                 <!-- Desktop Menu -->
                 <div class="hidden md:flex items-center space-x-8">
-                    <a href="{{ route('site.principal') }}" 
+                    <a href="{{ route('site.principal') }}"
                        class="text-gray-700 hover:text-blue-600 font-medium transition {{ request()->routeIs('site.principal') ? 'text-blue-600' : '' }}">
                         Início
                     </a>
-                    <a href="{{ route('site.sobre') }}" 
+                    <a href="{{ route('site.sobre') }}"
                        class="text-gray-700 hover:text-blue-600 font-medium transition {{ request()->routeIs('site.sobre') ? 'text-blue-600' : '' }}">
                         Sobre
                     </a>
-                    <a href="{{ route('site.contato') }}" 
+                    <a href="{{ route('site.contato') }}"
                        class="text-gray-700 hover:text-blue-600 font-medium transition {{ request()->routeIs('site.contato') ? 'text-blue-600' : '' }}">
                         Contato
                     </a>
                     @auth
-                        <a href="{{ route('admin.dashboard') }}" 
+                        <a href="{{ route('admin.dashboard') }}"
                            class="bg-gradient-to-r from-blue-600 to-indigo-600 text-white px-6 py-2 rounded-lg hover:from-blue-700 hover:to-indigo-700 transition">
                             Dashboard
                         </a>
                     @else
-                        <a href="{{ route('login') }}" 
+                        <a href="{{ route('login') }}"
                            class="text-gray-700 hover:text-blue-600 font-medium transition">
                             Entrar
                         </a>
-                        <a href="{{ route('register') }}" 
+                        <a href="{{ route('register') }}"
                            class="bg-gradient-to-r from-blue-600 to-indigo-600 text-white px-6 py-2 rounded-lg hover:from-blue-700 hover:to-indigo-700 transition">
                             Cadastrar
                         </a>
@@ -76,7 +79,7 @@
         </div>
 
         <!-- Mobile Menu -->
-        <div x-show="open" x-cloak 
+        <div x-show="open" x-cloak
              x-transition:enter="transition ease-out duration-200"
              x-transition:enter-start="opacity-0 scale-95"
              x-transition:enter-end="opacity-100 scale-100"
@@ -85,29 +88,29 @@
              x-transition:leave-end="opacity-0 scale-95"
              class="md:hidden bg-white border-t">
             <div class="px-2 pt-2 pb-3 space-y-1">
-                <a href="{{ route('site.principal') }}" 
+                <a href="{{ route('site.principal') }}"
                    class="block px-3 py-2 rounded-md text-gray-700 hover:bg-blue-50 hover:text-blue-600 font-medium {{ request()->routeIs('site.principal') ? 'bg-blue-50 text-blue-600' : '' }}">
                     Início
                 </a>
-                <a href="{{ route('site.sobre') }}" 
+                <a href="{{ route('site.sobre') }}"
                    class="block px-3 py-2 rounded-md text-gray-700 hover:bg-blue-50 hover:text-blue-600 font-medium {{ request()->routeIs('site.sobre') ? 'bg-blue-50 text-blue-600' : '' }}">
                     Sobre
                 </a>
-                <a href="{{ route('site.contato') }}" 
+                <a href="{{ route('site.contato') }}"
                    class="block px-3 py-2 rounded-md text-gray-700 hover:bg-blue-50 hover:text-blue-600 font-medium {{ request()->routeIs('site.contato') ? 'bg-blue-50 text-blue-600' : '' }}">
                     Contato
                 </a>
                 @auth
-                    <a href="{{ route('admin.dashboard') }}" 
+                    <a href="{{ route('admin.dashboard') }}"
                        class="block px-3 py-2 rounded-md bg-gradient-to-r from-blue-600 to-indigo-600 text-white text-center">
                         Dashboard
                     </a>
                 @else
-                    <a href="{{ route('login') }}" 
+                    <a href="{{ route('login') }}"
                        class="block px-3 py-2 rounded-md text-gray-700 hover:bg-blue-50 hover:text-blue-600 font-medium">
                         Entrar
                     </a>
-                    <a href="{{ route('register') }}" 
+                    <a href="{{ route('register') }}"
                        class="block px-3 py-2 rounded-md bg-gradient-to-r from-blue-600 to-indigo-600 text-white text-center">
                         Cadastrar
                     </a>

@@ -61,6 +61,7 @@
                         <input type="tel" 
                                id="telefone" 
                                name="telefone"
+                               data-mask="phone"
                                class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition"
                                placeholder="(11) 1234-5678">
                     </div>
