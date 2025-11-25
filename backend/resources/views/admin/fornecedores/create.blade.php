@@ -13,17 +13,17 @@
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div class="md:col-span-2"><label class="block text-sm font-medium text-gray-700 mb-2">Nome *</label><input type="text" name="nome" value="{{ old('nome') }}" required class="w-full px-4 py-2 border border-gray-300 rounded-lg"></div>
                 <div class="md:col-span-2"><label class="block text-sm font-medium text-gray-700 mb-2">Razão Social *</label><input type="text" name="razao_social" value="{{ old('razao_social') }}" required class="w-full px-4 py-2 border border-gray-300 rounded-lg"></div>
-                <div><label class="block text-sm font-medium text-gray-700 mb-2">CNPJ *</label><input type="text" name="cnpj" value="{{ old('cnpj') }}" required class="w-full px-4 py-2 border border-gray-300 rounded-lg"></div>
+                <div><label class="block text-sm font-medium text-gray-700 mb-2">CNPJ *</label><input type="text" name="cnpj" value="{{ old('cnpj') }}" required data-mask="cnpj" placeholder="00.000.000/0000-00" class="w-full px-4 py-2 border border-gray-300 rounded-lg"></div>
                 <div><label class="block text-sm font-medium text-gray-700 mb-2">E-mail *</label><input type="email" name="email" value="{{ old('email') }}" required class="w-full px-4 py-2 border border-gray-300 rounded-lg"></div>
-                <div><label class="block text-sm font-medium text-gray-700 mb-2">Telefone *</label><input type="text" name="telefone" value="{{ old('telefone') }}" required class="w-full px-4 py-2 border border-gray-300 rounded-lg"></div>
-                <div><label class="block text-sm font-medium text-gray-700 mb-2">Celular</label><input type="text" name="celular" value="{{ old('celular') }}" class="w-full px-4 py-2 border border-gray-300 rounded-lg"></div>
+                <div><label class="block text-sm font-medium text-gray-700 mb-2">Telefone *</label><input type="text" name="telefone" value="{{ old('telefone') }}" required data-mask="phone" placeholder="(00) 0000-0000" class="w-full px-4 py-2 border border-gray-300 rounded-lg"></div>
+                <div><label class="block text-sm font-medium text-gray-700 mb-2">Celular</label><input type="text" name="celular" value="{{ old('celular') }}" data-mask="phone" placeholder="(00) 00000-0000" class="w-full px-4 py-2 border border-gray-300 rounded-lg"></div>
                 <div class="md:col-span-2"><label class="block text-sm font-medium text-gray-700 mb-2">Nome do Contato</label><input type="text" name="contato_nome" value="{{ old('contato_nome') }}" class="w-full px-4 py-2 border border-gray-300 rounded-lg"></div>
             </div>
         </div>
         <div class="bg-white rounded-xl shadow-lg p-6">
             <h2 class="text-xl font-bold text-gray-900 mb-6">Endereço</h2>
             <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                <div><label class="block text-sm font-medium text-gray-700 mb-2">CEP *</label><input type="text" name="cep" value="{{ old('cep') }}" required class="w-full px-4 py-2 border border-gray-300 rounded-lg"></div>
+                <div><label class="block text-sm font-medium text-gray-700 mb-2">CEP * <span class="text-xs text-gray-500">(auto-preenche)</span></label><input type="text" name="cep" value="{{ old('cep') }}" required data-mask="cep" data-cep-autofill placeholder="00000-000" class="w-full px-4 py-2 border border-gray-300 rounded-lg"></div>
                 <div class="md:col-span-2"><label class="block text-sm font-medium text-gray-700 mb-2">Endereço *</label><input type="text" name="endereco" value="{{ old('endereco') }}" required class="w-full px-4 py-2 border border-gray-300 rounded-lg"></div>
                 <div><label class="block text-sm font-medium text-gray-700 mb-2">Número *</label><input type="text" name="numero" value="{{ old('numero') }}" required class="w-full px-4 py-2 border border-gray-300 rounded-lg"></div>
                 <div class="md:col-span-2"><label class="block text-sm font-medium text-gray-700 mb-2">Complemento</label><input type="text" name="complemento" value="{{ old('complemento') }}" class="w-full px-4 py-2 border border-gray-300 rounded-lg"></div>

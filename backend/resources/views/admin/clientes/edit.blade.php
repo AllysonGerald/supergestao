@@ -43,22 +43,31 @@
 
                 <div>
                     <label for="cpf_cnpj" class="block text-sm font-medium text-gray-700 mb-2">CPF / CNPJ *</label>
-                    <input type="text" name="cpf_cnpj" id="cpf_cnpj" value="{{ old('cpf_cnpj', $cliente->cpf_cnpj) }}" required class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent">
+                    <input type="text" name="cpf_cnpj" id="cpf_cnpj" value="{{ old('cpf_cnpj', $cliente->cpf_cnpj) }}" required
+                           data-mask="cpf-cnpj"
+                           class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent">
                 </div>
 
                 <div>
                     <label for="email" class="block text-sm font-medium text-gray-700 mb-2">E-mail *</label>
-                    <input type="email" name="email" id="email" value="{{ old('email', $cliente->email) }}" required class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent">
+                    <input type="email" name="email" id="email" value="{{ old('email', $cliente->email) }}" required
+                           class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent">
                 </div>
 
                 <div>
                     <label for="telefone" class="block text-sm font-medium text-gray-700 mb-2">Telefone *</label>
-                    <input type="text" name="telefone" id="telefone" value="{{ old('telefone', $cliente->telefone) }}" required class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent">
+                    <input type="text" name="telefone" id="telefone" value="{{ old('telefone', $cliente->telefone) }}" required
+                           data-mask="phone"
+                           placeholder="(00) 0000-0000"
+                           class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent">
                 </div>
 
                 <div>
                     <label for="celular" class="block text-sm font-medium text-gray-700 mb-2">Celular</label>
-                    <input type="text" name="celular" id="celular" value="{{ old('celular', $cliente->celular) }}" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent">
+                    <input type="text" name="celular" id="celular" value="{{ old('celular', $cliente->celular) }}"
+                           data-mask="phone"
+                           placeholder="(00) 00000-0000"
+                           class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent">
                 </div>
             </div>
         </div>
@@ -68,8 +77,15 @@
             
             <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
                 <div>
-                    <label for="cep" class="block text-sm font-medium text-gray-700 mb-2">CEP *</label>
-                    <input type="text" name="cep" id="cep" value="{{ old('cep', $cliente->cep) }}" required class="w-full px-4 py-2 border border-gray-300 rounded-lg">
+                    <label for="cep" class="block text-sm font-medium text-gray-700 mb-2">
+                        CEP * 
+                        <span class="text-xs text-gray-500">(preenche endereço automaticamente)</span>
+                    </label>
+                    <input type="text" name="cep" id="cep" value="{{ old('cep', $cliente->cep) }}" required
+                           data-mask="cep"
+                           data-cep-autofill
+                           placeholder="00000-000"
+                           class="w-full px-4 py-2 border border-gray-300 rounded-lg">
                 </div>
 
                 <div class="md:col-span-2">

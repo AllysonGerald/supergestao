@@ -51,6 +51,7 @@
                 <div>
                     <label for="cpf_cnpj" class="block text-sm font-medium text-gray-700 mb-2">CPF / CNPJ *</label>
                     <input type="text" name="cpf_cnpj" id="cpf_cnpj" value="{{ old('cpf_cnpj') }}" required
+                           data-mask="cpf-cnpj"
                            class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent @error('cpf_cnpj') border-red-500 @enderror">
                     @error('cpf_cnpj')
                         <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
@@ -69,6 +70,8 @@
                 <div>
                     <label for="telefone" class="block text-sm font-medium text-gray-700 mb-2">Telefone *</label>
                     <input type="text" name="telefone" id="telefone" value="{{ old('telefone') }}" required
+                           data-mask="phone"
+                           placeholder="(00) 0000-0000"
                            class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent @error('telefone') border-red-500 @enderror">
                     @error('telefone')
                         <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
@@ -78,6 +81,8 @@
                 <div>
                     <label for="celular" class="block text-sm font-medium text-gray-700 mb-2">Celular</label>
                     <input type="text" name="celular" id="celular" value="{{ old('celular') }}"
+                           data-mask="phone"
+                           placeholder="(00) 00000-0000"
                            class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent @error('celular') border-red-500 @enderror">
                     @error('celular')
                         <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
@@ -92,8 +97,14 @@
             
             <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
                 <div>
-                    <label for="cep" class="block text-sm font-medium text-gray-700 mb-2">CEP *</label>
+                    <label for="cep" class="block text-sm font-medium text-gray-700 mb-2">
+                        CEP * 
+                        <span class="text-xs text-gray-500">(preenche endereço automaticamente)</span>
+                    </label>
                     <input type="text" name="cep" id="cep" value="{{ old('cep') }}" required
+                           data-mask="cep"
+                           data-cep-autofill
+                           placeholder="00000-000"
                            class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent @error('cep') border-red-500 @enderror">
                     @error('cep')
                         <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
